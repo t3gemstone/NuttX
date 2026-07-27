@@ -39,12 +39,14 @@
 static struct pinmux_conf_s g_am67_pinmux_conf[] =
 {
   /* UART1_RXD -> MCASP0_AFSR (C27) */
+
   {
     PIN_MCASP0_AFSR,
     (PIN_MODE(2) | PIN_INPUT_ENABLE | PIN_PULL_DISABLE)
   },
 
   /* UART1_TXD -> MCASP0_ACLKR (F24) */
+
   {
     PIN_MCASP0_ACLKR,
     (PIN_MODE(2) | PIN_PULL_DISABLE)
@@ -184,6 +186,13 @@ static struct pinmux_conf_s g_am67_mcu_spi_pinmux_conf[] =
   {
     PIN_MCU_SPI0_CS1,
     (PIN_MODE(0) | PIN_PULL_DISABLE)
+  },
+
+  /* MCU_SPI0_CS2 (HAT spidev, channel 2) - WKUP_UART0_RXD pad, mode 2 */
+
+  {
+    PIN_WKUP_UART0_RXD,
+    (PIN_MODE(2) | PIN_PULL_DISABLE)
   },
 
   /* MCU_SPI0_CS3 (ICM20948, channel 3) - MCU_MCAN0_TX pad, mode 2 */

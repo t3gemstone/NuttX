@@ -1466,7 +1466,7 @@ int am67_i2cbus_uninitialize(struct i2c_master_s *dev)
 
   if (priv->inited)
     {
-      am67_i2c_deinit(priv);
+  am67_i2c_deinit(priv);
     }
 
   nxmutex_unlock(&priv->lock);

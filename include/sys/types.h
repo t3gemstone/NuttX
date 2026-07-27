@@ -246,6 +246,7 @@ typedef uint16_t     sa_family_t;
  */
 
 typedef int64_t      clock_t;
+typedef int64_t      sclock_t;       /* Signed clock ticks (upstream compat) */
 typedef int64_t      time_t;         /* Holds time in seconds */
 typedef int          clockid_t;      /* Identifies one time base source */
 typedef FAR void    *timer_t;        /* Represents one POSIX timer */
