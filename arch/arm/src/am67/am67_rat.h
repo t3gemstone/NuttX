@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/am67/am67_i2c.h
+ * arch/arm/src/am67/am67_rat.h
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -20,54 +20,35 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_AM67_AM67_I2C_H
-#define __ARCH_ARM_SRC_AM67_AM67_I2C_H
+#ifndef __ARCH_ARM_SRC_AM67_AM67_RAT_H
+#define __ARCH_ARM_SRC_AM67_AM67_RAT_H
 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
 #include <nuttx/config.h>
-#include <nuttx/i2c/i2c_master.h>
+
+#include <stdint.h>
+#include <stddef.h>
+
+/****************************************************************************
+ * Pre-processor Definitions
+ ****************************************************************************/
+
+/* 32-bit address range claimed by the RAT sliding window.  Must be mapped
+ * Non-cacheable in the MPU (am67_mpuinit.c) and must not overlap anything
+ * the firmware needs to address directly (NuttX RAM/IPC live in
+ * 0xa2000000-0xa3000000).
+ */
+
+#define AM67_RAT_WIN_BASE    (0xfe000000ul)
+#define AM67_RAT_WIN_SIZE    (0x01000000ul) /* 16 MB */
 
 /****************************************************************************
  * Public Function Prototypes
  ****************************************************************************/
 
-/****************************************************************************
- * Name: am67_i2cbus_initialize
- *
- * Description:
- *   Initialize the selected I2C port. And return a unique instance of struct
- *   struct i2c_master_s.  This function may be called to obtain multiple
- *   instances of the interface, each of which may be set up with a
- *   different frequency and slave address.
- *
- * Input Parameters:
- *   Port number (for hardware that has multiple I2C interfaces)
- *
- * Returned Value:
- *   Valid I2C device structure reference on success; a NULL on failure
- *
- ****************************************************************************/
+FAR void *am67_rat_map(uint64_t pa, FAR size_t *avail);
 
-struct i2c_master_s *am67_i2cbus_initialize(int port);
-
-/****************************************************************************
- * Name: am67_i2cbus_uninitialize
- *
- * Description:
- *   De-initialize the selected I2C port, and power down the device.
- *
- * Input Parameters:
- *   Device structure as returned by the am67_i2cbus_initialize()
- *
- * Returned Value:
- *   OK on success, ERROR when internal reference count mismatch or dev
- *   points to invalid hardware device.
- *
- ****************************************************************************/
-
-int am67_i2cbus_uninitialize(struct i2c_master_s *dev);
-
-#endif /* __ARCH_ARM_SRC_AM67_AM67_I2C_H */
+#endif /* __ARCH_ARM_SRC_AM67_AM67_RAT_H */
